@@ -14,7 +14,7 @@ class AttendanceFactory extends Factory
     public function definition()
     {
         $date = Carbon::parse(
-            $this->faker->dateTimeBetween('2025-11-01', '2026-03-01')
+            $this->faker->dateTimeBetween('2025-12-01', '2026-03-01')
         );
 
         $clockIn = $date->copy()->setTime(rand(8, 10), rand(0, 59));

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdminModifyRequest;
 use App\Models\Attendance;
 use App\Models\BreakTime;
+use App\Models\Modify;
+use App\Models\ModifyDetail;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestDetail;
 use App\Models\User;
@@ -55,6 +57,27 @@ class AdminController extends Controller
     public function modify(AdminModifyRequest $request, $id)
     {
         $attendance = Attendance::find($id);
+
+        $modify = Modify::create([
+            'attendance_id' => $id,
+            'user_id' => $attendance->user->id,
+            'admin_user_id' => auth()->id(),
+            'reason' => $request->reason,
+            'modified_at' => now(),
+        ]);
+
+        ModifyDetail::firstOrCreate(
+            ['modify_id' => $modify->id],
+            [
+                'payload' => [
+                    'clock_in_at' => $request->clock_in_at,
+                    'clock_out_at' => $request->clock_out_at,
+                    'breaks' => $request->breaks,
+                    'new_breaks' => $request->new_breaks,
+                ]
+            ]
+        );
+
         $attendance->update([
             'clock_in_at' => Carbon::parse($attendance->clock_in_at)
                 ->setTimeFromTimeString($request->clock_in_at),
