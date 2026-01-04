@@ -52,3 +52,7 @@ attendance-management-app
 
 - 開発環境：http://localhost/
 - phpMyAdmin：http://localhost:8080/
+
+## ER 図
+
+![ER図](./docs/er.drawio.png)
