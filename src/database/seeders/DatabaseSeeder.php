@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Attendance;
+use App\Models\BreakTime;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory()->admin()->count(5)->create();
+        User::factory()
+            ->count(10)
+            ->has(Attendance::factory()->count(10))
+            ->create();
     }
 }

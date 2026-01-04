@@ -50,3 +50,8 @@
     color: #0073cc;
     margin-top: 30px;
 }
+
+.form__error {
+    margin-top: -30px;
+    color: red;
+}

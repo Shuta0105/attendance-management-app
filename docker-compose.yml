@@ -28,6 +28,19 @@ services:
     volumes:
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/mysql/data:/var/lib/mysql
+
+  mysql_testing:
+    image: mysql:8.0.26
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel_test
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: laravel_pass
+    command:
+      mysqld --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mysql/testing_data:/var/lib/mysql
   
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

@@ -41,3 +41,9 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.form__error {
+    margin-top: -50px;
+    margin-bottom: 50px;
+    color: red;
+}

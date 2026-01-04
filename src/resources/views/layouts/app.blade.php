@@ -22,6 +22,7 @@
                 <a href="/attendance/list" class="header__nav-link">勤怠一覧</a>
                 <a href="/stamp_correction_request/list" class="header__nav-link">申請</a>
                 <form action="/logout" method="post">
+                    @csrf
                     <button class="logout__button">ログアウト</button>
                 </form>
             </div>
@@ -31,6 +32,8 @@
     <main>
         @yield('content')
     </main>
+
+    @yield('js')
 </body>
 
 </html>

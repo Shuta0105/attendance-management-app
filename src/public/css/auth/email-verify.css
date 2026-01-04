@@ -1,0 +1,40 @@
+.verify__content {
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.verify__message {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.verify__button-submit {
+    width: 250px;
+    height: 60px;
+    color: #000000;
+    background-color: #d9d9d9;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.verify__send-submit {
+    background: none;
+    border: none;
+    color: #0073cc;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.verify__send-submit:hover {
+    text-decoration: underline;
+}
