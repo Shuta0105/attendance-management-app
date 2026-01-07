@@ -37,6 +37,8 @@
 4. DB_USERNAME=laravel_user
 5. DB_PASSWORD=laravel_pass
 
+「Laravel 環境構築」へ戻る
+
 ## ダミーデータ情報
 
 ユーザーのパスワードはすべて「password」
@@ -45,7 +47,7 @@
 
 - コマンド
 
-vendor/bin/phpunit tests/Feature/***
+vendor/bin/phpunit tests/Feature/\*\*\*
 
 ## 使用技術
 
