@@ -9,6 +9,25 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
+    public function redirect()
+    {
+        $user = auth()->user();
+
+        $todayAttendance = Attendance::where('user_id', $user->id)
+            ->where('work_date', now()->toDateString())
+            ->first();
+
+        if (!$todayAttendance) {
+            return $this->index();
+        }
+
+        if ($todayAttendance->clock_in_at && !$todayAttendance->clock_out_at) {
+            return view('staff.attendance-in-work');
+        }
+
+        return $this->index();
+    }
+
     public function index()
     {
         $attendance = Attendance::where('user_id', auth()->id())
@@ -30,7 +49,7 @@ class AttendanceController extends Controller
             ]);
             return view('staff.attendance-in-work');
         }
-        return view('staff.attendance-in-work');
+        return;
     }
 
     public function clockOut()
@@ -44,7 +63,7 @@ class AttendanceController extends Controller
             ]);
             return view('staff.attendance-after-work');
         }
-        return view('staff.attendance-after-work');
+        return;
     }
 
     public function list(Request $request)

@@ -31,10 +31,7 @@ class AdminController extends Controller
             ->where('status', '承認待ち')
             ->first();
         $requestDetail = $modelRequest ? RequestDetail::where('request_id', $modelRequest->id)->first() : null;
-        if ($modelRequest) {
-            return view('staff.detail', compact('attendance', 'modelRequest', 'requestDetail'));
-        }
-        return view('admin.attendance-detail', compact('attendance'));
+        return view('admin.attendance-detail', compact('attendance', 'modelRequest', 'requestDetail'));
     }
 
     public function staffList()

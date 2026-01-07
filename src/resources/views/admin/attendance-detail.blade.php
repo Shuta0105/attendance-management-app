@@ -1,3 +1,8 @@
+@php
+$modelRequest = $modelRequest ?? null;
+$requestDetail = $requestDetail ? $requestDetail->payload : [];
+@endphp
+
 @extends('layouts.admin-app')
 
 @section('css')
@@ -35,11 +40,27 @@
                 <tr class="table__row">
                     <th class="table__header">出勤・退勤</th>
                     <td class="table__item">
-                        <input class="table__item-input" name="clock_in_at" type="text"
-                            value="{{ old( "clock_in_at", $attendance->clock_in_at->format('H:i') ) }}">
+                        <input class="table__item-input
+                        {{ $modelRequest?->status === '承認待ち' ? 'pending' : '' }}"
+                            name="clock_in_at" type="text"
+                            value="{{ old( 
+                                "clock_in_at", 
+                                !$modelRequest || $modelRequest?->status === '承認済み'
+                                ? optional($attendance->clock_in_at)->format('H:i') 
+                                : $requestDetail['clock_in_at'] ?? '' 
+                            ) }}"
+                            @if (optional($modelRequest)->status === '承認待ち') readonly @endif>
                         <span>~</span>
-                        <input class="table__item-input" name="clock_out_at" type="text"
-                            value="{{ old( "clock_out_at", optional($attendance->clock_out_at)->format('H:i') ) }}">
+                        <input class="table__item-input
+                        {{ $modelRequest?->status === '承認待ち' ? 'pending' : '' }}"
+                            name="clock_out_at" type="text"
+                            value="{{ old(
+                                "clock_out_at",
+                                !$modelRequest || $modelRequest?->status === '承認済み'  
+                                ? optional($attendance->clock_out_at)->format('H:i') 
+                                : $requestDetail['clock_out_at'] ?? '' 
+                            ) }}"
+                            @if (optional($modelRequest)->status === '承認待ち') readonly @endif>
                     </td>
                 </tr>
                 @foreach ($attendance->breakTimes as $index => $break)
@@ -47,33 +68,78 @@
                     <th class="table__header">休憩</th>
                     <td class="table__item">
                         <input type="hidden" name="breaks[{{ $index }}][id]" value="{{ $break->id }}">
-                        <input class="table__item-input" name="breaks[{{ $index }}][break_start_at]" type="text"
-                            value="{{ old( "breaks.$index.break_start_at", optional($break->break_start_at)->format('H:i') ) }}">
+                        <input class="table__item-input
+                        {{ $modelRequest?->status === '承認待ち' ? 'pending' : '' }}"
+                            name="breaks[{{ $index }}][break_start_at]" type="text"
+                            value="{{ old( 
+                                "breaks.$index.break_start_at", 
+                                !$modelRequest || $modelRequest?->status === '承認済み'
+                                ? optional($break->break_start_at)->format('H:i') 
+                                : $requestDetail['breaks'][$break->id]['break_start_at'] ?? ''
+                            ) }}"
+                            @if (optional($modelRequest)->status === '承認待ち') readonly @endif>
                         <span>~</span>
-                        <input class="table__item-input" name="breaks[{{ $index }}][break_end_at]" type="text"
-                            value="{{ old( "breaks.$index.break_end_at", optional($break->break_end_at)->format('H:i') ) }}">
+                        <input class="table__item-input
+                        {{ $modelRequest?->status === '承認待ち' ? 'pending' : '' }}"
+                            name="breaks[{{ $index }}][break_end_at]" type="text"
+                            value="{{ old( 
+                                "breaks.$index.break_end_at", 
+                                !$modelRequest || $modelRequest?->status === '承認済み'  
+                                ? optional($break->break_end_at)->format('H:i')
+                                : $requestDetail['breaks'][$break->id]['break_end_at'] ?? ''
+                            ) }}"
+                            @if (optional($modelRequest)->status === '承認待ち') readonly @endif>
                     </td>
                 </tr>
                 @endforeach
+                @if ($requestDetail &&
+                !isset($requestDetail['new_breaks'][0]['break_start_at']) &&
+                !isset($requestDetail['new_breaks'][0]['break_end_at']))
+                @else
                 <tr class="table__row">
                     <th class="table__header">休憩2</th>
                     <td class="table__item">
-                        <input class="table__item-input" name="new_breaks[0][break_start_at]" type="text"
-                            value="{{ old('new_breaks.0.break_start_at') }}">
+                        <input class="table__item-input
+                        {{ $modelRequest?->status === '承認待ち' ? 'pending' : '' }}"
+                            name="new_breaks[0][break_start_at]" type="text"
+                            value="{{ old(
+                                "new_breaks.0.break_start_at",
+                                !$modelRequest || $modelRequest?->status === '承認済み'  
+                                ? '' 
+                                : $requestDetail['new_breaks'][0]['break_start_at'] ?? '' 
+                            ) }}"
+                            @if (optional($modelRequest)->status === '承認待ち') readonly @endif>
                         <span>~</span>
-                        <input class="table__item-input" name="new_breaks[0][break_end_at]" type="text"
-                            value="{{ old('new_breaks.0.break_end_at') }}">
+                        <input class="table__item-input
+                        {{ $modelRequest?->status === '承認待ち' ? 'pending' : '' }}"
+                            name="new_breaks[0][break_end_at]" type="text"
+                            value="{{ old(
+                                "new_breaks.0.break_end_at",
+                                !$modelRequest || $modelRequest?->status === '承認済み'  
+                                ? '' 
+                                : $requestDetail['new_breaks'][0]['break_end_at'] ?? '' 
+                            ) }}"
+                            @if (optional($modelRequest)->status === '承認待ち') readonly @endif>
                     </td>
                 </tr>
+                @endif
                 <tr class="table__row">
                     <th class="table__header">備考</th>
                     <td class="table__item">
+                        @if ($modelRequest?->reason)
+                        <div>{{ $modelRequest?->reason }}</div>
+                        @else
                         <textarea class="table__item-textarea" name="reason" rows="5">{{ old('reason') }}</textarea>
+                        @endif
                     </td>
                 </tr>
             </table>
             <div class="form__button">
+                @if ($modelRequest?->status === '承認待ち')
+                <div class="form__button-message">*承認待ちのため修正はできません。</div>
+                @else
                 <button class="form__button-submit" type="submit">修正</button>
+                @endif
             </div>
         </form>
     </div>

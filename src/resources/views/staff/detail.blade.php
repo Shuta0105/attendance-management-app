@@ -2,6 +2,7 @@
 $modelRequest = $modelRequest ?? null;
 $requestDetail = $requestDetail ? $requestDetail->payload : [];
 @endphp
+
 @extends('layouts.app')
 
 @section('css')

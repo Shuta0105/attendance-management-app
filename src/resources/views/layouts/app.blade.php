@@ -15,7 +15,7 @@
 <body>
     <header class="header">
         <div class="header__inner">
-            <a href="/">
+            <a href="/attendance">
                 <img src="{{ asset('img/COACHTECHヘッダーロゴ.png') }}"
                     alt="ロゴ画像">
             </a>

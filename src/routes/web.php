@@ -13,7 +13,7 @@ Route::get('/stamp_correction_request/list', function () {})->middleware(['auth'
 
 // 一般ユーザー
 Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
-    Route::get('/attendance', [AttendanceController::class, 'index']);
+    Route::get('/attendance', [AttendanceController::class, 'redirect']);
     Route::get('/attendance/list', [AttendanceController::class, 'list']);
     Route::get('/attendance/detail/{id}', [AttendanceController::class, 'detail']);
 
