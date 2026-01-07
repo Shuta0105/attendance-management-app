@@ -12,7 +12,7 @@
     <div class="list__calendar">
         <button id="prev"><span class="arrow-button">←</span> 前日</button>
         <div class="month-label">
-            <span class="icon">📅</span>
+            <i class="fa-regular fa-calendar"></i>
             <span id="month"></span>
         </div>
         <button id="next">翌日 <span class="arrow-button">→</span></button>

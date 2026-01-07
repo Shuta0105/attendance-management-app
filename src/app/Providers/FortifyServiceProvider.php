@@ -16,6 +16,8 @@ use Laravel\Fortify\Http\Requests\LoginRequest;
 use App\Http\Requests\LoginRequest as CustomLoginRequest;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use App\Http\Responses\RegisterResponse as CustomRegisterResponse;
+use Laravel\Fortify\Contracts\LogoutResponse;
+use App\Http\Responses\LogoutResponse as CustomLogoutResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->bind(LoginRequest::class, CustomLoginRequest::class);
         $this->app->bind(LoginResponse::class, CustomLoginResponse::class);
         $this->app->bind(RegisterResponse::class, CustomRegisterResponse::class);
+        $this->app->singleton(LogoutResponse::class, CustomLogoutResponse::class);
     }
 
     public function boot(): void

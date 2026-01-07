@@ -54,7 +54,7 @@ class AdminRequestController extends Controller
                 ->setTimeFromTimeString($payload['clock_out_at'])
         ]);
 
-        foreach ($payload['breaks'] as $breakPayload) {
+        foreach ($payload['breaks'] ?? [] as $breakPayload) {
             $break = BreakTime::find($breakPayload['id']);
             $break->update([
                 'break_start_at' => $breakPayload['break_start_at'],

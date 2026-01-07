@@ -13,7 +13,9 @@
         <div class="attendance__time">
             <h1 id="time"></h1>
         </div>
+        @if (! optional($attendance)->clock_out_at)
         <button class="attendance__button" type="submit">出勤</button>
+        @endif
     </form>
 </div>
 @endsection

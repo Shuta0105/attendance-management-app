@@ -11,7 +11,10 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        return view('staff.index');
+        $attendance = Attendance::where('user_id', auth()->id())
+            ->where('work_date', now()->toDateString())
+            ->first();
+        return view('staff.index', compact('attendance'));
     }
 
     public function clockIn()
@@ -41,7 +44,7 @@ class AttendanceController extends Controller
             ]);
             return view('staff.attendance-after-work');
         }
-        return redirect('/attendance');
+        return view('staff.attendance-after-work');
     }
 
     public function list(Request $request)

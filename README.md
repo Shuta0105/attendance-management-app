@@ -1,6 +1,6 @@
 # アプリケーション名
 
-attendance-management-app
+勤怠管理アプリ
 
 ## 環境構築
 
@@ -37,9 +37,15 @@ attendance-management-app
 4. DB_USERNAME=laravel_user
 5. DB_PASSWORD=laravel_pass
 
-## ダミー情報
+## ダミーデータ情報
 
 ユーザーのパスワードはすべて「password」
+
+## テスト
+
+- コマンド
+
+vendor/bin/phpunit tests/Feature/***
 
 ## 使用技術
 

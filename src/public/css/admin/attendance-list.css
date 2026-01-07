@@ -104,3 +104,9 @@ body {
     color: #000000;
     text-decoration: none;
 }
+
+.fa-calendar {
+    color: #000;
+    font-size: 20px;
+    margin-right: 8px;
+}

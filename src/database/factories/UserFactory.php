@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 class UserFactory extends Factory
 {
     protected $model = User::class;
-    
+
     public function definition()
     {
         return [
@@ -24,6 +24,7 @@ class UserFactory extends Factory
     {
         return $this->state(fn() => [
             'role' => 'admin',
+            'email_verified_at' => now(),
         ]);
     }
 

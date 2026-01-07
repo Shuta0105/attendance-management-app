@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->admin()->count(5)->create();
         User::factory()
-            ->count(10)
-            ->has(Attendance::factory()->count(10))
+            ->count(15)
+            ->has(Attendance::factory()->count(20))
             ->create();
     }
 }
