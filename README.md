@@ -49,6 +49,12 @@
 
 vendor/bin/phpunit tests/Feature/\*\*\*
 
+- 補足
+
+Feature/user/UserRequestTest.php でテストが失敗する場合、以下のコマンドを実行
+
+sudo chown -R 実行ユーザー:実行ユーザー storage bootstrap/cache
+
 ## 使用技術
 
 - nginx 1.21.1

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\BreakTime;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestDetail;
 use Illuminate\Http\Request;
@@ -19,6 +20,14 @@ class AttendanceController extends Controller
 
         if (!$todayAttendance) {
             return $this->index();
+        }
+
+        $duringBreak = BreakTime::where('attendance_id', $todayAttendance->id)
+            ->whereNull('break_end_at')
+            ->first();
+
+        if ($duringBreak) {
+            return view('staff.attendance-during-break');
         }
 
         if ($todayAttendance->clock_in_at && !$todayAttendance->clock_out_at) {
