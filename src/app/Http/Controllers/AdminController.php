@@ -30,8 +30,15 @@ class AdminController extends Controller
         $modelRequest = ModelsRequest::where('attendance_id', $id)
             ->where('status', '承認待ち')
             ->first();
+        $approvedRequest = ModelsRequest::where('attendance_id', $id)
+            ->where('status', '承認済み')
+            ->latest()
+            ->first();
         $requestDetail = $modelRequest ? RequestDetail::where('request_id', $modelRequest->id)->first() : null;
-        return view('admin.attendance-detail', compact('attendance', 'modelRequest', 'requestDetail'));
+        return view(
+            'admin.attendance-detail',
+            compact('attendance', 'modelRequest', 'requestDetail', 'approvedRequest')
+        );
     }
 
     public function staffList()
@@ -46,7 +53,7 @@ class AdminController extends Controller
         $user = User::find($id);
         $attendances = Attendance::where('user_id', $id)
             ->where('work_date', 'LIKE', '%' . $date . '%')
-            ->orderBy('work_date', 'desc')
+            ->orderBy('work_date', 'asc')
             ->get();
         return view('admin.staff-detail', compact('user', 'attendances', 'date'));
     }

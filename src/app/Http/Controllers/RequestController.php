@@ -24,7 +24,7 @@ class RequestController extends Controller
                 ->where('status', '承認済み');
         }
 
-        $requests = $query->orderBy('requested_at', 'desc')->get();
+        $requests = $query->orderBy('requested_at', 'asc')->get();
 
         return view('staff.request-list', compact('requests', 'status'));
     }

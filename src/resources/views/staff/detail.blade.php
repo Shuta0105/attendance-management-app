@@ -135,7 +135,10 @@ $requestDetail = $requestDetail ? $requestDetail->payload : [];
                         @if ($modelRequest?->reason)
                         <div>{{ $modelRequest?->reason }}</div>
                         @else
-                        <textarea class="table__item-textarea" name="reason" rows="5">{{ old('reason') }}</textarea>
+                        <textarea
+                            class="table__item-textarea"
+                            name="reason"
+                            rows="5">{{ old("reason", $approvedRequest->reason ?? '') }}</textarea>
                         @endif
                     </td>
                 </tr>

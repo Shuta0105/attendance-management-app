@@ -80,7 +80,7 @@ class AttendanceController extends Controller
         $date = $request->input('date', now()->format('Y-m'));
         $attendances = Attendance::where('user_id', auth()->id())
             ->where('work_date', 'LIKE', '%' . $date . '%')
-            ->orderBy('work_date', 'desc')
+            ->orderBy('work_date', 'asc')
             ->get();
         return view('staff.list', compact('attendances', 'date'));
     }
@@ -91,7 +91,11 @@ class AttendanceController extends Controller
         $modelRequest = ModelsRequest::where('attendance_id', $attendance->id)
             ->where('status', '承認待ち')
             ->first();
+        $approvedRequest = ModelsRequest::where('attendance_id', $id)
+            ->where('status', '承認済み')
+            ->latest()
+            ->first();
         $requestDetail = $modelRequest ? RequestDetail::where('request_id', $modelRequest->id)->first() : null;
-        return view('staff.detail', compact('attendance', 'modelRequest', 'requestDetail'));
+        return view('staff.detail', compact('attendance', 'modelRequest', 'requestDetail', 'approvedRequest'));
     }
 }

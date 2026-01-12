@@ -64,7 +64,7 @@ sudo chown -R 実行ユーザー:実行ユーザー storage bootstrap/cache
 
 ## URL
 
-- 開発環境：http://localhost/
+- 開発環境：http://localhost/admin/login
 - phpMyAdmin：http://localhost:8080/
 
 ## ER 図
